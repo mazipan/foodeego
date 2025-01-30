@@ -37,7 +37,9 @@ describe('useFoods', () => {
   test('return error', async () => {
     mockErrorResponse();
 
-    const { result } = renderHook(() => useFoods());
+    const { result } = renderHook(() =>
+      useFoods({ initialCategory: 'all', initialKeyword: '' })
+    );
 
     await waitFor(() =>
       expect(result.current.isError.message).toStrictEqual(
@@ -49,7 +51,9 @@ describe('useFoods', () => {
   test('return success mock data', async () => {
     mockSuccessResponse();
 
-    const { result } = renderHook(() => useFoods());
+    const { result } = renderHook(() =>
+      useFoods({ initialCategory: 'all', initialKeyword: '' })
+    );
 
     await waitFor(() => {
       expect(result.current.origin.length).toBe(
@@ -60,10 +64,28 @@ describe('useFoods', () => {
     });
   });
 
+  test('return success mock data with initial filters applied', async () => {
+    mockSuccessResponse();
+
+    const { result } = renderHook(() =>
+      useFoods({
+        initialCategory: '6288a89f1f0152b8c2cd512b',
+        initialKeyword: 'Quinex Shushi',
+      })
+    );
+
+    await waitFor(() => {
+      expect(result.current.foods.length).toBe(1);
+      expect(result.current.foods).toStrictEqual([MOCK_FOOD_FIRST_PAGE[2]]);
+    });
+  });
+
   test('return success then trigger filter', async () => {
     mockSuccessResponse();
 
-    const { result } = renderHook(() => useFoods());
+    const { result } = renderHook(() =>
+      useFoods({ initialCategory: 'all', initialKeyword: '' })
+    );
 
     await waitFor(() => {
       expect(result.current.foods).toStrictEqual(MOCK_FOOD_FIRST_PAGE);
@@ -88,7 +110,9 @@ describe('useFoods', () => {
   test('return success then load the next page', async () => {
     mockSuccessResponse();
 
-    const { result } = renderHook(() => useFoods());
+    const { result } = renderHook(() =>
+      useFoods({ initialCategory: 'all', initialKeyword: '' })
+    );
 
     await waitFor(() => {
       expect(result.current.foods.length).toStrictEqual(9);

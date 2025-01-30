@@ -12,7 +12,7 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
     <span
       ref={ref}
       className={clsx(
-        'inline-flex gap-1 items-center bg-gray-100 text-gray-800 text-xs font-medium rounded-sm dark:bg-gray-700 dark:text-gray-300 me-2 px-1.5 py-0.5',
+        'inline-flex gap-1 items-center bg-gray-100 text-gray-800 text-xs font-medium rounded-sm dark:bg-gray-700 dark:text-gray-300 px-1.5 py-0.5',
         className
       )}
       {...props}

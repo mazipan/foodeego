@@ -25,6 +25,7 @@ export const generateSearchParam = (newKeyword?: string, newCatId?: string) => {
   if (newKeyword) {
     sp.append('s', newKeyword);
   }
+
   if (newCatId && newCatId !== 'all') {
     sp.append('cat', newCatId);
   }

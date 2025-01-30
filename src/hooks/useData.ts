@@ -49,7 +49,13 @@ export type Foods = {
 };
 
 const LIMIT = 9;
-export function useFoods() {
+export function useFoods({
+  initialKeyword,
+  initialCategory,
+}: {
+  initialKeyword: string;
+  initialCategory: string;
+}) {
   const [originFood, setOriginFoods] = useState<Food[]>([]);
   const [paginateFood, setPaginateFoods] = useState<Array<Food[]>>([]);
   const [foods, setFoods] = useState<Food[]>([]);
@@ -58,17 +64,21 @@ export function useFoods() {
 
   const { data, error, isLoading } = useSWR<Foods>(ENDPOINT.FOOD, fetcher);
 
-  const filter = (keyword: string, categoryId: string) => {
+  const _execFilter = (
+    orArray: Food[],
+    keyword: string,
+    categoryId: string
+  ) => {
     let match: Food[] = [];
     if (categoryId !== 'all') {
-      match = originFood.filter((food) => {
+      match = orArray.filter((food) => {
         return (
           food.categoryId.includes(categoryId) &&
           food.name.toLowerCase().includes(keyword.toLowerCase())
         );
       });
     } else {
-      match = originFood.filter((food) => {
+      match = orArray.filter((food) => {
         return food.name.toLowerCase().includes(keyword.toLowerCase());
       });
     }
@@ -82,6 +92,10 @@ export function useFoods() {
     if (paginate.length > 1) {
       setHasNext(true);
     }
+  };
+
+  const filter = (keyword: string, categoryId: string) => {
+    _execFilter(originFood, keyword, categoryId);
   };
 
   const onLoadMore = () => {
@@ -107,12 +121,20 @@ export function useFoods() {
   // Set initial data to internal state
   useEffect(() => {
     if (!isLoading && !error) {
-      setOriginFoods(data?.foods || []);
-      const paginate = chunk(data?.foods || [], LIMIT);
-      setPaginateFoods(paginate);
-      setFoods(paginate[0] || []);
+      const dOrigin = data?.foods || []
+      setOriginFoods(dOrigin);
+
+      // Read the initial value here
+      if (initialCategory !== 'all' || initialKeyword !== '') {
+        console.log({ initialCategory, initialKeyword })
+        _execFilter(dOrigin, initialKeyword, initialCategory);
+      } else {
+        const paginate = chunk(dOrigin, LIMIT);
+        setPaginateFoods(paginate);
+        setFoods(paginate[0] || []);
+      }
     }
-  }, [isLoading, error, data]);
+  }, [isLoading, error, data, initialCategory, initialKeyword]);
 
   return {
     origin: originFood,

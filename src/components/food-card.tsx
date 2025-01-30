@@ -44,7 +44,7 @@ export function FoodCard({ food }: { food: Food }) {
           </h5>
         </a>
 
-        <div className="mb-3 font-normal text-gray-700 dark:text-gray-400 inline-flex">
+        <div className="mb-3 font-normal text-gray-700 dark:text-gray-400 inline-flex flex-wrap gap-1">
           <Badge>
             <StarIcon className="size-3" />
             {formatRating(food.rating)}

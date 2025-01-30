@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { SWRConfig } from 'swr';
 import { BrowserRouter, Route, Routes } from 'react-router';
 
+import '@fontsource-variable/inter';
 import './index.css';
 
 import { swrCache } from './lib/swr-cache.ts';

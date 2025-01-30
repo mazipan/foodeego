@@ -9,7 +9,7 @@ import {
 } from '@heroicons/react/16/solid';
 import { FoodCard } from '../components/food-card';
 import { Empty } from '../components/empty';
-import { useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 import { Button } from '../components/button';
 import { generateSearchParam } from '../lib/utils';
 
@@ -22,12 +22,23 @@ function Layout({ children }: { children: ReactNode }) {
 }
 
 export default function Home() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   const searchInput = useRef<HTMLInputElement>(null);
-  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  const initialQuerySearchValue = searchParams.get('s') || '';
+  const initialQueryCategoryValue = searchParams.get('cat') || 'all';
+
+  const [selectedCategory, setSelectedCategory] = useState(
+    initialQueryCategoryValue
+  );
 
   const catResponses = useCategories();
-  const foodResponse = useFoods();
-  const navigate = useNavigate();
+  const foodResponse = useFoods({
+    initialCategory: initialQueryCategoryValue,
+    initialKeyword: initialQuerySearchValue,
+  });
 
   if (catResponses.isLoading || foodResponse.isLoading) {
     return (
@@ -99,6 +110,7 @@ export default function Home() {
             name="s"
             id="search_keyword"
             ref={searchInput}
+            defaultValue={initialQuerySearchValue}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
             placeholder="Enter restaurant name..."
           />
@@ -107,9 +119,10 @@ export default function Home() {
       </form>
 
       <ButtonGroup
+        className="overflow-y-auto w-full px-2"
         items={[
           { id: 'all', name: 'All', isActive: selectedCategory === 'all' },
-          ...(catResponses.categories),
+          ...catResponses.categories,
         ].map((cat) => {
           return {
             ...cat,
@@ -123,7 +136,7 @@ export default function Home() {
 
       {foodResponse.foods.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {foodResponse.foods.map((food) => (
               <FoodCard food={food} key={food.id} />
             ))}

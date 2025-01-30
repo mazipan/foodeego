@@ -4,9 +4,9 @@ function Header() {
   return (
     <header className="w-full border-b border-gray-300 dark:border-gray-600">
       <section className="container mx-auto flex justify-between px-4 py-2 items-center gap-4">
-        <NavLink to="/" className="flex items-center gap-2 p-2 rounded-lg">
+        <NavLink to="/" className="flex items-center gap-2 p-2 rounded-lg hover:bg-slate-200 hover:dark:bg-slate-700">
           <img src="/favicon/favicon-32x32.png" />
-          <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-red-500 to-green-500 inline-block text-transparent bg-clip-text">
+          <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-red-500 to-green-500 inline-block text-transparent bg-clip-text hover:from-green-500 hover:to-red-500 transition-colors duration-500">
             Foodeego
           </h1>
         </NavLink>
@@ -14,7 +14,7 @@ function Header() {
           href="https://github.com/mazipan/foodeego"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 p-2 rounded-lg"
+          className="flex items-center gap-2 p-2 rounded-lg hover:bg-slate-200 hover:dark:bg-slate-700"
         >
           <svg
             viewBox="0 0 24 24"
