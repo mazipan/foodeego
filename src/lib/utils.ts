@@ -1,5 +1,5 @@
 export function formatRating(num: number): string {
-  if (num < 0.09) {
+  if (num <= 0.049) {
     return Math.round(num).toString();
   }
 
