@@ -109,7 +109,7 @@ export default function Home() {
       <ButtonGroup
         items={[
           { id: 'all', name: 'All', isActive: selectedCategory === 'all' },
-          ...(catResponses.categories || []),
+          ...(catResponses.categories),
         ].map((cat) => {
           return {
             ...cat,

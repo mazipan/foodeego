@@ -20,6 +20,6 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
   )
 );
 
-Button.displayName = 'Spinner';
+Button.displayName = 'Button';
 
 export { Button };

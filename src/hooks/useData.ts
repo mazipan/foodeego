@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { chunk } from '../lib/utils';
 
-const ENDPOINT = {
+export const ENDPOINT = {
   CATEGORIES:
     'https://gist.githubusercontent.com/wilson-wego/f7381fcead7a47a7df257a97a033456a/raw/33cd31ce75ba72a809d48944463b53b74b9ccae8/categories.json',
   FOOD: 'https://gist.githubusercontent.com/wilson-wego/8311b463cd331099e34a1f251dad4cbf/raw/f1b04f9afe0fcc0c9270cb486b927641b7d27436/food.json',
@@ -24,7 +24,7 @@ export function useCategories() {
   );
 
   return {
-    categories: data,
+    categories: data || [],
     isLoading,
     isError: error,
   };

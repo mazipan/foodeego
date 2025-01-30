@@ -14,7 +14,9 @@ export function FoodCard({ food }: { food: Food }) {
           className="rounded-t-lg max-h-[200px] w-full object-cover"
           src={food.imageUrl}
           alt={food.name}
+          loading='lazy'
         />
+
         {food.promotion === 'gift' && (
           <Badge className="absolute top-0 left-0 rounded-tl-lg rounded-tr-none  rounded-bl-none rounded-br-lg px-3 py-1 bg-sky-500 text-white">
             <GiftIcon className="size-5" />
@@ -34,12 +36,14 @@ export function FoodCard({ food }: { food: Food }) {
           </Badge>
         )}
       </a>
+
       <div className="p-5">
         <a href="#">
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             {food.name}
           </h5>
         </a>
+
         <div className="mb-3 font-normal text-gray-700 dark:text-gray-400 inline-flex">
           <Badge>
             <StarIcon className="size-3" />

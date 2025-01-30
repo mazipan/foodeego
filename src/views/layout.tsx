@@ -67,4 +67,8 @@ Footer.displayName = 'Footer';
 Header.displayName = 'Header';
 Layout.displayName = 'Layout';
 
-export default Layout;
+export {
+  Layout,
+  Header,
+  Footer,
+};

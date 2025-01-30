@@ -7,7 +7,7 @@ import './index.css';
 
 import { swrCache } from './lib/swr-cache.ts';
 import Home from './views/Home.tsx';
-import Layout from './views/layout.tsx';
+import { Layout } from './views/layout.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
