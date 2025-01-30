@@ -3,7 +3,10 @@ import { createRoot } from 'react-dom/client';
 import { SWRConfig } from 'swr';
 import { BrowserRouter, Route, Routes } from 'react-router';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import '@fontsource-variable/inter';
+
 import './index.css';
 
 import { swrCache } from './lib/swr-cache.ts';
