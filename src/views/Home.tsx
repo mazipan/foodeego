@@ -11,11 +11,12 @@ import { FoodCard } from '../components/food-card';
 import { Empty } from '../components/empty';
 import { useNavigate } from 'react-router';
 import { Button } from '../components/button';
+import { generateSearchParam } from '../lib/utils';
 
 function Layout({ children }: { children: ReactNode }) {
   return (
     <article className="container mx-auto space-y-4 p-4">
-      <main className="space-y-4">{children}</main>
+      <div className="space-y-4">{children}</div>
     </article>
   );
 }
@@ -47,19 +48,6 @@ export default function Home() {
     );
   }
 
-  const generateSearchParam = (newKeyword?: string, newCatId?: string) => {
-    const sp = new URLSearchParams();
-    if (newKeyword) {
-      sp.append('s', newKeyword);
-    }
-    if (newCatId && newCatId !== 'all') {
-      sp.append('cat', newCatId);
-    }
-
-    const spStr = sp.toString();
-    return spStr ? `?${spStr}` : '';
-  };
-
   const handleSubmitSearch = (e: FormEvent) => {
     e.preventDefault();
     const keyword = searchInput.current?.value;
@@ -84,6 +72,15 @@ export default function Home() {
 
     const sp = generateSearchParam(keyword, cat.id);
     navigate(sp);
+  };
+
+  const handleResetFilter = () => {
+    setSelectedCategory('all');
+    foodResponse.filter('', 'all');
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    searchInput.current.value = '';
+    navigate('');
   };
 
   return (
@@ -147,17 +144,7 @@ export default function Home() {
           title="Can not found any data here."
           description="Please reset your search or filters."
           action={
-            <Button
-              type="button"
-              onClick={() => {
-                setSelectedCategory('all');
-                foodResponse.filter('', 'all');
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                searchInput.current.value = '';
-                navigate('');
-              }}
-            >
+            <Button type="button" onClick={handleResetFilter}>
               <ArrowPathIcon className="size-6" />
               Reset Filter
             </Button>

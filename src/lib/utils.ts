@@ -19,3 +19,16 @@ export const chunk = <T>(arr: Array<T>, chunkSize: number) => {
     return resultArray;
   }, [] as Array<Array<T>>);
 };
+
+export const generateSearchParam = (newKeyword?: string, newCatId?: string) => {
+  const sp = new URLSearchParams();
+  if (newKeyword) {
+    sp.append('s', newKeyword);
+  }
+  if (newCatId && newCatId !== 'all') {
+    sp.append('cat', newCatId);
+  }
+
+  const spStr = sp.toString();
+  return spStr ? `?${spStr}` : '';
+};
