@@ -126,7 +126,6 @@ export function useFoods({
 
       // Read the initial value here
       if (initialCategory !== 'all' || initialKeyword !== '') {
-        console.log({ initialCategory, initialKeyword })
         _execFilter(dOrigin, initialKeyword, initialCategory);
       } else {
         const paginate = chunk(dOrigin, LIMIT);

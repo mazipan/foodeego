@@ -21,7 +21,7 @@ function Layout({ children }: { children: ReactNode }) {
   );
 }
 
-export default function Home() {
+export function Home() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 

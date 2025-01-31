@@ -1,7 +1,7 @@
 import { expect, test, describe } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import Home from '../Home';
+import { Home } from '../Home';
 import { mockErrorResponse, mockSuccessResponse } from '../../hooks/mock';
 import userEvent from '@testing-library/user-event';
 
@@ -93,8 +93,8 @@ describe('Home', () => {
       </MemoryRouter>
     );
 
-    const btnCat_All = await screen.findByText('All')
-    const btnCat_Desert = await screen.findByText('Desserts', { exact: true })
+    const btnCat_All = await screen.findByText('All');
+    const btnCat_Desert = await screen.findByText('Desserts', { exact: true });
 
     expect(btnCat_All).toBeInTheDocument();
     expect(btnCat_Desert).toBeInTheDocument();

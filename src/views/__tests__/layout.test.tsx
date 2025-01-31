@@ -1,6 +1,6 @@
 import { expect, test, describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Footer, Header } from '../layout';
+import { Footer, Header } from '../_layout';
 import { MemoryRouter } from 'react-router';
 
 describe('Layout', () => {
