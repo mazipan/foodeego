@@ -51,11 +51,7 @@ export function useCategories() {
 }
 
 const _isFoodContainsCategoryId = (food: Food, categoryId: string) => {
-  if (categoryId !== 'all') {
-    return food.categoryId === categoryId
-  }
-
-  return true
+  return food.categoryId === categoryId;
 }
 
 const _isFoodContainsKeyword = (food: Food, keyword: string) => {

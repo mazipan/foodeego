@@ -1,7 +1,8 @@
 import { vi, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { ButtonGroup } from '../button-group';
 import userEvent from '@testing-library/user-event';
+
+import { ButtonGroup } from '../button-group';
 
 const user = userEvent.setup();
 

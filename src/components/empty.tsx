@@ -24,8 +24,8 @@ export function Empty({
       )}
       {...props}
     >
-      <div className="mr-4 shrink-0 rounded-full border border-dashed p-4">
-        <Icon className="size-8 text-muted-foreground" aria-hidden="true" />
+      <div className="mr-4 shrink-0 rounded-full border border-dashed p-4 border-slate-400 dark:border-slate-100">
+        <Icon className="size-8 text-slate-400 dark:text-slate-100" aria-hidden="true" />
       </div>
       <div className="flex flex-col items-center gap-1.5 text-center">
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">

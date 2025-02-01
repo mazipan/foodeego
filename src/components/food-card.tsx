@@ -52,7 +52,7 @@ export function FoodCard({ food }: { food: Food }) {
           <Badge>
             {food.minCookTime}-{food.maxCookTime} min
           </Badge>
-          {food.isNew && <Badge className="text-green-500">New</Badge>}
+          {food.isNew && <Badge className="text-green-500 dark:text-green-500">New</Badge>}
         </div>
       </div>
     </div>
