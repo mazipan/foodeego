@@ -43,7 +43,9 @@ export function Home() {
   if (catResponses.isLoading || foodResponse.isLoading) {
     return (
       <Layout>
-        <Spinner size="lg" />
+        <div className="min-h-[350px] w-full flex flex-col gap-6 items-center px-4 py-24">
+          <Spinner size="lg" />
+        </div>
       </Layout>
     );
   }
@@ -61,25 +63,19 @@ export function Home() {
 
   const handleSubmitSearch = (e: FormEvent) => {
     e.preventDefault();
-    const keyword = searchInput.current?.value;
 
-    if (keyword) {
-      foodResponse.filter(keyword, 'all');
-    }
+    const keyword = searchInput.current?.value || '';
+    foodResponse.filter(keyword, selectedCategory);
 
     const sp = generateSearchParam(keyword, selectedCategory);
     navigate(sp);
   };
 
   const handleClickCategory = (cat: Category) => {
-    const keyword = searchInput.current?.value;
-    setSelectedCategory(cat.id);
+    const keyword = searchInput.current?.value || '';
 
-    if (keyword) {
-      foodResponse.filter(keyword, cat.id);
-    } else {
-      foodResponse.filter('', cat.id);
-    }
+    setSelectedCategory(cat.id);
+    foodResponse.filter(keyword, cat.id);
 
     const sp = generateSearchParam(keyword, cat.id);
     navigate(sp);

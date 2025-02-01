@@ -17,24 +17,11 @@ export type Category = {
   name: string;
 };
 
-export function useCategories() {
-  const { data, error, isLoading } = useSWR<Category[]>(
-    ENDPOINT.CATEGORIES,
-    fetcher
-  );
-
-  return {
-    categories: data || [],
-    isLoading,
-    isError: error,
-  };
-}
-
 export type Food = {
   id: string;
   index: number;
   rating: number;
-  promotion: string;
+  promotion: string | null;
   isNew: boolean;
   categoryId: string;
   minCookTime: number;
@@ -49,6 +36,67 @@ export type Foods = {
 };
 
 const LIMIT = 9;
+
+export function useCategories() {
+  const { data, error, isLoading } = useSWR<Category[]>(
+    ENDPOINT.CATEGORIES,
+    fetcher
+  );
+
+  return {
+    categories: data || [],
+    isLoading,
+    isError: error,
+  };
+}
+
+const _isFoodContainsCategoryId = (food: Food, categoryId: string) => {
+  if (categoryId !== 'all') {
+    return food.categoryId === categoryId
+  }
+
+  return true
+}
+
+const _isFoodContainsKeyword = (food: Food, keyword: string) => {
+  if (keyword) {
+    const RGX = new RegExp(keyword, "i")
+    return RGX.test(food.name)
+  }
+
+  return true
+}
+
+export const _internalFindFoods = (
+  orArray: Food[],
+  keyword: string,
+  categoryId: string
+) => {
+  let match: Food[] = [];
+
+  // Doesn't need to filter anything
+  if (categoryId === 'all' && keyword === '') {
+    const paginate = chunk(orArray || [], LIMIT);
+    return paginate;
+  }
+
+  if (categoryId !== 'all') {
+    match = orArray.filter((food) => {
+      return (
+        _isFoodContainsCategoryId(food, categoryId) &&
+        _isFoodContainsKeyword(food, keyword)
+      );
+    });
+  } else {
+    match = orArray.filter((food) => {
+      return _isFoodContainsKeyword(food, keyword);
+    });
+  }
+
+  const paginate = chunk(match || [], LIMIT);
+  return paginate;
+};
+
 export function useFoods({
   initialKeyword,
   initialCategory,
@@ -69,27 +117,13 @@ export function useFoods({
     keyword: string,
     categoryId: string
   ) => {
-    let match: Food[] = [];
-    if (categoryId !== 'all') {
-      match = orArray.filter((food) => {
-        return (
-          food.categoryId.includes(categoryId) &&
-          food.name.toLowerCase().includes(keyword.toLowerCase())
-        );
-      });
-    } else {
-      match = orArray.filter((food) => {
-        return food.name.toLowerCase().includes(keyword.toLowerCase());
-      });
-    }
+    const paginatedResult = _internalFindFoods(orArray, keyword, categoryId);
 
-    const paginate = chunk(match || [], LIMIT);
-
-    setPaginateFoods(paginate);
-    setFoods(paginate[0] || []);
+    setPaginateFoods(paginatedResult);
+    setFoods(paginatedResult?.[0] || []);
 
     setPage(0);
-    if (paginate.length > 1) {
+    if (paginatedResult.length > 1) {
       setHasNext(true);
     }
   };
@@ -121,7 +155,7 @@ export function useFoods({
   // Set initial data to internal state
   useEffect(() => {
     if (!isLoading && !error) {
-      const dOrigin = data?.foods || []
+      const dOrigin = data?.foods || [];
       setOriginFoods(dOrigin);
 
       // Read the initial value here

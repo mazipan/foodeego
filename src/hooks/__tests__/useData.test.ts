@@ -1,6 +1,6 @@
 import { expect, test, describe } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
-import { useCategories, useFoods } from '../useData';
+import { _internalFindFoods, useCategories, useFoods } from '../useData';
 import {
   MOCK_CATEGORIES_RESPONSE,
   MOCK_FOOD_FIRST_PAGE,
@@ -129,5 +129,22 @@ describe('useFoods', () => {
     await waitFor(() => {
       expect(result.current.foods.length).toStrictEqual(19);
     });
+  });
+});
+
+describe('_internalFindFoods', () => {
+  test('should not filter anything', async () => {
+    const res = _internalFindFoods(MOCK_FOOD_FIRST_PAGE, '', 'all');
+    expect(res[0][0]).toStrictEqual(MOCK_FOOD_FIRST_PAGE[0])
+  });
+
+  test('should filter with keyword only', async () => {
+    const res = _internalFindFoods(MOCK_FOOD_FIRST_PAGE, 'Shushi', 'all');
+    expect(res[0][0]).toStrictEqual(MOCK_FOOD_FIRST_PAGE[1])
+  });
+
+  test('should filter with keyword and category', async () => {
+    const res = _internalFindFoods(MOCK_FOOD_FIRST_PAGE, 'kle', '6288a89f7338764f2071a8a8');
+    expect(res[0][0]).toStrictEqual(MOCK_FOOD_FIRST_PAGE[3])
   });
 });

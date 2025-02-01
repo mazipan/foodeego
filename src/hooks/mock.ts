@@ -1,6 +1,7 @@
 import nock from 'nock';
+import { Category, Food, Foods } from './useData';
 
-export const MOCK_CATEGORIES_RESPONSE = [
+export const MOCK_CATEGORIES_RESPONSE: Category[] = [
   {
     id: '6288a89f1f0152b8c2cd512b',
     name: 'Sushi',
@@ -23,7 +24,7 @@ export const MOCK_CATEGORIES_RESPONSE = [
   },
 ];
 
-export const MOCK_FOOD_FIRST_PAGE = [
+export const MOCK_FOOD_FIRST_PAGE: Food[] = [
   {
     id: '628b5decc94a27754f30e6f1',
     index: 0,
@@ -152,7 +153,7 @@ export const MOCK_FOOD_FIRST_PAGE = [
   },
 ];
 
-export const MOCK_SECOND_PAGE = [
+export const MOCK_SECOND_PAGE: Food[] = [
   {
     id: '628b5dec5f76520c3a124f56',
     index: 9,
@@ -281,7 +282,7 @@ export const MOCK_SECOND_PAGE = [
   },
 ];
 
-export const MOCK_FOOD_RESPONSE = {
+export const MOCK_FOOD_RESPONSE: Foods = {
   foods: [
     ...MOCK_FOOD_FIRST_PAGE,
     ...MOCK_SECOND_PAGE,

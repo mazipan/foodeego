@@ -34,7 +34,7 @@ export function App() {
       <BrowserRouter>
         <Suspense
           fallback={
-            <div className="min-h-[350px] flex flex-col gap-6 items-center px-4 py-24">
+            <div className="min-h-[350px] w-full flex flex-col gap-6 items-center px-4 py-24">
               <Spinner size="lg" />
             </div>
           }
